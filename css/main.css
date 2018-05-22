@@ -1,0 +1,104 @@
+html
+{
+    font-size: 1.5rem
+}
+
+body
+{
+	margin: 0;
+	padding: 0;
+	font-family: 'helvetica', sans-serif;
+    background: #dcdcdc;
+}
+
+a
+{
+    color: #000000;
+}
+
+.container
+{
+  padding: 0px 50px;  
+  background-color: white;
+}
+
+.header
+{
+  margin: 50px 0px;
+}
+
+.title
+{
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.description
+{
+  font-size: 1.1rem;
+}
+
+.form
+{
+  margin: 50px 0px;
+}
+
+.divtextarea
+{
+  display: block;
+  margin-bottom: 15px;
+}
+
+.textarea
+{
+  width: 100%;  
+}
+
+.divbutton
+{
+  display: block;
+}
+
+.btn
+{
+  background-color: white;
+  border-radius: 7px;
+  border: solid 2px #81e0df;
+}
+
+.result
+{
+  display: block;
+}
+
+.res-header
+{
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.item1
+{
+  display: inline-block;
+  margin: 20px;
+  width: 6rem;
+}
+
+.crop
+{
+  height: 2.3rem;
+  width: 2.3rem;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.item-name
+{
+  margin: 0px auto;
+  text-align: center;
+}
