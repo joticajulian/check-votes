@@ -8,7 +8,7 @@ body
 	margin: 0;
 	padding: 0;
 	font-family: 'helvetica', sans-serif;
-    background: #dcdcdc;
+    background: #598aa0;
 }
 
 a
@@ -71,7 +71,7 @@ a
 {
   background-color: white;
   border-radius: 7px;
-  border: solid 2px #81e0df;
+  border: solid 2px #598aa0;
   padding: 8px 12px;
 }
 
@@ -91,7 +91,9 @@ a
 {
   display: inline-block;
   margin: 20px;
-  width: 6rem;
+  width: 7rem;
+  border: solid 2px #000000;
+  border-radius: 10px;
 }
 
 .crop
@@ -102,11 +104,21 @@ a
   background-size: cover;
   background-position: center center;
   border-radius: 50%;
-  margin: auto;
+  margin: 5px auto;
 }
 
 .item-name
 {
+  margin: 0px auto 3px auto;
+  padding: 3px 0px;
+  text-align: center;
+  color: #ffffff;
+  background-color: #598aa0;  
+}
+
+.item-value
+{
+  font-size: 0.8rem;
   margin: 0px auto;
   text-align: center;
 }

@@ -3,6 +3,10 @@ now = new Date();
 curators = {};
 responses = 0;
 
+steem_price = 0;
+reward_balance = 0;
+recent_claims = 0;
+
 var rpc_nodes = [
   {url:"https://api.steemit.com",timeLastResponse:now},
   {url:"https://steemd.pevo.science",timeLastResponse:now},
@@ -20,6 +24,7 @@ console.log("we are inside");
 
 $(function () {
   setApiNode();
+  initConnectionSteemApi();
 });
 
 
@@ -67,7 +72,7 @@ function check(){
           percent: votes[i].percent,
           rshares: votes[i].rshares,
           time: votes[i].weight
-        }
+        };
         c = votes[i].voter;
         if(!curators[c]){
           curators[c] = {};
@@ -93,7 +98,7 @@ function check(){
         for(var i=count.length-1;i>0;i--){
           $('#result').append(htmlResultHeader(i));
           count[i].sort().forEach(function (c){
-            $('#result').append(htmlResultItem(c));
+            $('#result').append(htmlResultItem(c , curators[c].posts));
           });          
         }        
       }
@@ -105,11 +110,17 @@ function htmlResultHeader(n){
   return '<div class="res-header">'+n+' votes</div>';
 }
 
-function htmlResultItem(user){
+function htmlResultItem(user,posts){
+  html_values = '';
+  posts.forEach(function(p){
+    html_values += '<div class="item-value">$'+rshares2sbd(p.rshares).toFixed(5)+'</div>';
+  });
+
   return ''+
     '<div class="item1">'+
       '<div class="crop" style="background-image: url(https://steemitimages.com/u/'+user+'/avatar/small);"></div>'+
       '<div class="item-name">'+user+'</div>'+
+      html_values+
     '</div>';
 }       
 
