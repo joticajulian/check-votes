@@ -19,16 +19,22 @@ var rpc_nodes = [
 ];
 var id_rpc_node = 0;
 
-console.log("we are inside");
-
-
+/*
+ * Initiate the connection with RPC nodes
+ * Get Steem global variables
+ */
 $(function () {
   setApiNode();
-  initConnectionSteemApi();
+  getGlobalVariables();
 });
 
-
-function initConnectionSteemApi(){
+/*
+ * Get global variables:
+ *  - steem_price
+ *  - reward_balance
+ *  - recent_claims
+ */ 
+function getGlobalVariables(){
   steem.api.getCurrentMedianHistoryPrice(function(err, result){
     if (err || !result){
       handleErrorPrice(err);
@@ -52,7 +58,13 @@ function initConnectionSteemApi(){
     });      
   });    
 }
-         
+ 
+/*
+ * CHECK - count the number of votes
+ *
+ * This function takes the links and get the votes of them.
+ * Finally, the curators are classified by the number of votes.
+ */ 
 function check(){
   curators = {};
   responses = 0;
@@ -62,6 +74,8 @@ function check(){
     console.log('checking link: '+link);
     var permlink = link.substr(link.lastIndexOf('/') + 1);
     var author = link.substring(link.lastIndexOf('@') + 1, link.lastIndexOf('/'));
+    
+    //Get post content from API
     steem.api.getContent(author,permlink,function(err, result){
       votes = result.active_votes;
       for(var i=0;i<votes.length;i++){
@@ -79,13 +93,18 @@ function check(){
           curators[c].votes = 0;
           curators[c].posts = [];
         }
+        
+        //count of votes
         curators[c].votes++;
         curators[c].posts.push(p);          
       }
       
+      //Show results when all posts are received
       responses++;
       if(responses >= links.length){
         var count = [];
+        
+        //Classify curators by number of votes
         for(var c in curators){
           votes = curators[c].votes;
           if(!count[votes]){
@@ -94,6 +113,7 @@ function check(){
           count[votes].push(c);
         }
         
+        //Show the results
         $('#result').text('');        
         for(var i=count.length-1;i>0;i--){
           $('#result').append(htmlResultHeader(i));
@@ -106,10 +126,16 @@ function check(){
   });
 }
 
+/*
+ *  htmlResultHeader - title with the number of votes
+ */
 function htmlResultHeader(n){
   return '<div class="res-header">'+n+' votes</div>';
 }
 
+/*
+ *  htmlResultItem - single curator information (photo, name, vote values)
+ */
 function htmlResultItem(user,posts){
   html_values = '';
   posts.forEach(function(p){
@@ -122,8 +148,18 @@ function htmlResultItem(user,posts){
       '<div class="item-name">'+user+'</div>'+
       html_values+
     '</div>';
-}       
+}    
 
+/*
+ *  Transform r-shares into SBD
+ */
+function rshares2sbd(rs){
+  return rs*(reward_balance/recent_claims)*steem_price;
+}   
+
+/*
+ * setApiNode - init configuration of Steem API
+ */
 function setApiNode(){
   var n = id_rpc_node;
   if(n >= rpc_nodes.length) return false;
@@ -131,8 +167,3 @@ function setApiNode(){
   console.log('RPC Node: '+rpc_nodes[n].url); 
   return true;
 }
-
-function rshares2sbd(rs){
-  return rs*(reward_balance/recent_claims)*steem_price;
-}
-
